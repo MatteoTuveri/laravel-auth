@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('title',100);
+            $table->string('title',100)->unique();
+            $table->string('slug',255)->unique();
             $table->text('description');
             $table->string('technologies',255);
-            $table->string('authors',255);
+            $table->string('authors',255)->nullable();
+            $table->date('release_date');
             $table->timestamps();
         });
     }
