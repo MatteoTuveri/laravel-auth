@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title',100)->unique();
             $table->string('slug',255)->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('technologies',255);
             $table->string('authors',255)->nullable();
             $table->date('release_date');

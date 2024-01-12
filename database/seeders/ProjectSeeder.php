@@ -17,11 +17,11 @@ class ProjectSeeder extends Seeder
         $projects = config('db.projects');
         foreach($projects as $project){
             $newProject = new Project();
-            $newProject -> $project['title'];
-            $newProject -> $project['decription'];
-            $newProject -> $project['technologies'];
-            $newProject -> $project['authors'];
-            $newProject -> $project['release_date'];
+            $newProject ->title= $project['title'];
+            $newProject ->description = $project['description'];
+            $newProject ->technologies = $project['technologies'];
+            $newProject ->authors = $project['authors'];
+            $newProject ->release_date = $project['release_date'];
             $newProject -> user_id = 1 ;
             $newProject -> slug = Str::slug($project['title']);
             $newProject->save();

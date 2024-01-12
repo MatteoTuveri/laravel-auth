@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -14,7 +15,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('admin.projects');
+        $projects = Project::all();
+        return view('admin.posts.index',compact('projects'));
     }
 
     /**
@@ -22,7 +24,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects');
+        return view('admin.posts.create');
     }
 
     /**
@@ -30,7 +32,13 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        $data = $request->validated();
+        $slug = Str::slug($data['title'],'-');
+        $userId = auth()->id(); // or Auth::id();
+        $data['slug'] = $slug;
+        $data['user_id'] = $userId;
+        $project = Project::create($data);
+        return redirect()->route('admin.posts.show', $project->id);
     }
 
     /**
@@ -38,7 +46,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects');
+        return view('admin.projects.show');
     }
 
     /**
@@ -46,7 +54,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit');
     }
 
     /**
@@ -54,7 +62,12 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $data = $request->validated();
+        $slug = Str::slug($data['title'],'-');
+        $data['user_id'] = $project->user_id;
+        $data['slug'] = $slug;
+        $project->update($data);
+        return redirect()->route('admin.posts.show', $project->id);
     }
 
     /**
@@ -62,6 +75,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        return to_route('admin.posts.index')->with('msg',"$project->title è stato eliminato");
     }
 }

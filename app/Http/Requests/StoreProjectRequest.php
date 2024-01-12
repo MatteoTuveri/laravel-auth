@@ -11,7 +11,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required','min:5','max:200','unique:posts'],
+            'technologies' => ['required'],
+            'release_date' =>['required']
+        ];
+    }
+
+    public function messages(){
+        return[
+            'title.required' => 'il titolo è obbligatorio',
+            'title.min' => 'il titolo deve avere almeno :min caratteri',
+            'title.max' => 'il titolo deve avere massimo :max caratteri',
+            'technologies.required' => 'L\'elenco delle tecnologie è obbligatorio',
+            'release_date.required' => 'La data di rilascio è obbligatoria',
         ];
     }
 }
