@@ -23,7 +23,7 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control @error ('authors') is-invalid @enderror" placeholder="authors" name="authors" value="{{ old('', $project->)authors }}">
+                <input type="text" class="form-control @error ('authors') is-invalid @enderror" placeholder="authors" name="authors" value="{{ old('', $project->authors) }}">
                 @error('authors')
                     <div class=" invalid-feedback">{{ $message }}</div>
                 @enderror
