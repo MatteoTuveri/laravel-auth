@@ -86,6 +86,7 @@
 
         <main class="">
             @yield('content')
+            @include('layouts.partials.modal')
         </main>
     </div>
 </body>

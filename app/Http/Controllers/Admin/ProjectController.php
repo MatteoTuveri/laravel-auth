@@ -38,7 +38,7 @@ class ProjectController extends Controller
         $data['slug'] = $slug;
         $data['user_id'] = $userId;
         $project = Project::create($data);
-        return redirect()->route('admin.posts.show', $project->id);
+        return redirect()->route('admin.projects.show', $project->id);
     }
 
     /**
@@ -46,7 +46,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show');
+        return view('admin.projects.show',compact('project'));
     }
 
     /**
@@ -54,7 +54,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit');
+        return view('admin.projects.edit',compact('project'));
     }
 
     /**
@@ -67,7 +67,7 @@ class ProjectController extends Controller
         $data['user_id'] = $project->user_id;
         $data['slug'] = $slug;
         $project->update($data);
-        return redirect()->route('admin.posts.show', $project->id);
+        return redirect()->route('admin.projects.show', $project->id);
     }
 
     /**
@@ -76,6 +76,6 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-        return to_route('admin.posts.index')->with('msg',"$project->title è stato eliminato");
+        return to_route('admin.projects.index')->with('msg',"$project->title è stato eliminato");
     }
 }
