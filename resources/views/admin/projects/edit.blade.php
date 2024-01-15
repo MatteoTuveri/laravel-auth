@@ -2,8 +2,9 @@
 @section('content')
     <section class="container">
         <h1>Post create</h1>
-        <form action="{{ route('admin.projects.store') }}" method="POST">
+        <form action="{{ route('admin.projects.update',$project->id) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="mb-3">
                 <input type="text" class="form-control @error ('title') is-invalid @enderror" placeholder="title" name="title" maxlength="200" minlength="5" required value="{{ old('', $project->title) }}">
                 @error('title')

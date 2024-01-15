@@ -16,13 +16,6 @@ return [
             "authors" => "Matteo,Clelia",
             "release_date" => '2023-09-20'
         ],
-        [
-            "title" => "Molisana",
-            "description" => "Site to explore the Molisana's pasta catalog",
-            "technologies" => "Laravel,php",
-            "authors" => "Matteo,Clelia",
-            "release_date" => '2023-09-20'
-        ],
     ]
 ]
     ?>
