@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -37,8 +38,12 @@ class ProjectController extends Controller
         $userId = auth()->id(); // or Auth::id();
         $data['slug'] = $slug;
         $data['user_id'] = $userId;
+        if($request->hasFile('image')){
+            $path = Storage::put('images',$request->image);
+            $data['image'] = $path;
+        }
         $project = Project::create($data);
-        return redirect()->route('admin.projects.show', $project->id);
+        return redirect()->route('admin.projects.show', $project->slug);
     }
 
     /**
@@ -65,9 +70,18 @@ class ProjectController extends Controller
         $data = $request->validated();
         $slug = Str::slug($data['title'],'-');
         $data['user_id'] = $project->user_id;
-        $data['slug'] = $slug;
+        if($project->title !== $data['title']){
+            $data['slug'] = Project::getSlug($data['title']);
+        }
+        if($request->hasFile('image')){
+            if($project->image){
+                Storage::delete($project->image);
+            }
+            $path = Storage::put('images',$request->image);
+            $data['image'] = $path;
+        }
         $project->update($data);
-        return redirect()->route('admin.projects.show', $project->id);
+        return redirect()->route('admin.projects.show', $project->slug);
     }
 
     /**
@@ -75,6 +89,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if($project->image){
+            Storage::delete($project->image);
+        }
         $project->delete();
         return to_route('admin.projects.index')->with('msg',"$project->title è stato eliminato");
     }

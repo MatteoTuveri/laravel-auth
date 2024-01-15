@@ -2,7 +2,7 @@
 @section('content')
     <section class="container">
         <h1>Post create</h1>
-        <form action="{{ route('admin.projects.store') }}" method="POST">
+        <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
             <div class="mb-3">
                 <input type="text" class="form-control @error ('title') is-invalid @enderror" placeholder="title" name="title" maxlength="200" minlength="5" required>
@@ -31,6 +31,13 @@
             <div class="mb-3">
                 <input type="date" class="form-control @error ('release_date') is-invalid @enderror" placeholder="release_date" name="release_date">
                 @error('release_date')
+                    <div class=" invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <img src="" alt="" id="uploadPreview">
+                <input type="file" id="image" class="form-control @error ('image') is-invalid @enderror" placeholder="image" name="image">
+                @error('image')
                     <div class=" invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

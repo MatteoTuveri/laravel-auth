@@ -2,7 +2,7 @@
 @section('content')
     <section class="container">
         <h1>Post create</h1>
-        <form action="{{ route('admin.projects.update',$project->id) }}" method="POST">
+        <form action="{{ route('admin.projects.update',$project->slug) }}" enctype="multipart/form-data"  method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -32,6 +32,12 @@
             <div class="mb-3">
                 <input type="date" class="form-control @error ('release_date') is-invalid @enderror" placeholder="release_date" name="release_date" value="{{ old('', $project->release_date) }}">
                 @error('release_date')
+                    <div class=" invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <input type="file" class="form-control @error ('image') is-invalid @enderror" placeholder="image" name="image" value="{{ old('', $project->image) }}">
+                @error('image')
                     <div class=" invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

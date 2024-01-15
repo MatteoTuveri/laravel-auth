@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('technologies',255);
             $table->string('authors',255)->nullable();
             $table->date('release_date');
+            $table->string('image',255)->nullable();
             $table->timestamps();
         });
     }

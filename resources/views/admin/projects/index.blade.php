@@ -15,7 +15,7 @@
                 <tr>
                     <th>
                         <div class="d-flex align-items-center justify-content-center">
-                            <a href="{{ route('admin.projects.show', $project->id) }}">{{ $project->title }}</a>
+                            <a href="{{ route('admin.projects.show', $project->slug) }}">{{ $project->title }}</a>
                         </div>
                     </th>
                     <td>
@@ -24,11 +24,11 @@
                         </div></td>
                     <td>
                         <div >
-                            <form action="{{route('admin.projects.destroy', $project->id)}}"class="d-flex align-items-center justify-content-center" method="POST">
+                            <form action="{{route('admin.projects.destroy', $project->slug)}}"class="d-flex align-items-center justify-content-center" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-primary text-decoration-none mx-1"><i class="fa-solid fa-eye"></i></a>
-                                <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning text-decoration-none mx-1"><i class="fa-solid fa-pencil"></i></a>
+                                <a href="{{ route('admin.projects.show', $project->slug) }}" class="btn btn-primary text-decoration-none mx-1"><i class="fa-solid fa-eye"></i></a>
+                                <a href="{{ route('admin.projects.edit', $project->slug) }}" class="btn btn-warning text-decoration-none mx-1"><i class="fa-solid fa-pencil"></i></a>
                                 <button type="submit" class="btn btn-danger text-decoration-none mx-1 delete-button" data-item="{{ $project->title }}"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </div>
